@@ -1,0 +1,167 @@
+{% extends 'base.html' %} 
+
+{% block title %}Cortes agendados{% endblock %}
+
+{% block extra_head %}
+    <style>
+        .filter-form {
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.514);
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .filter-form label {
+            font-weight: bold;
+        }
+        .filter-form input[type="date"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .filter-form button {
+            padding: 8px 15px;
+            background-color: #FF5722;
+            color: rgb(13, 1, 1);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .filter-form button:hover {
+            background-color: #4A5469;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        li {
+            background-color: #eeedee;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        li strong {
+            color: #333;
+        }
+        .status-pendente {
+            color: orange;
+            font-weight: bold;
+        }
+        .status-confirmado {
+            color: green;
+            font-weight: bold;
+        }
+        .status-cancelado {
+            color: red;
+            font-weight: bold;
+        }
+        .filter-info {
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
+            color: #666;
+        }
+        .filter-info a {
+            color: #5C677D;
+            text-decoration: none;
+        }
+        .filter-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
+{% endblock extra_head %}
+
+
+{% block content %} 
+    <h1>Serviços agendados</h1>
+
+    <div class="filter-form">
+        <form method="get" action="">
+            <label for="data_filtro">Filtrar por Data:</label>
+            <input type="date" id="data_filtro" name="data_filtro" value="{{ data_filtro_atual|default:'' }}">
+
+            <button type="submit" class="btn-primario">Filtrar</button>
+        </form>
+    </div>
+
+    {% if data_filtro_atual %}
+        <p class="filter-info">Exibindo agendamentos para: <strong>{{ data_filtro_atual|date:"d/m/Y" }}</strong></p>
+        <p class="filter-info"><a href="{% url 'lista-agendamentos-html' %}">Ver todos os agendamentos</a></p>
+    {% endif %}
+
+    {% if agendamentos %}
+        <ul>
+            {% for agendamento in agendamentos %}
+                <li>
+                    <strong>Cliente:</strong> {{ agendamento.nome_cliente }} <br>
+                    <strong>Telefone:</strong> {{ agendamento.telefone_cliente }} <br>
+                    <strong>Serviço:</strong> {{ agendamento.servico }} <br>
+                    <strong>Data:</strong> {{ agendamento.data_agendamento|date:"d/m/Y" }} <br>
+                    <strong>Hora:</strong> {{ agendamento.hora_agendamento|time:"H:i" }} <br>
+                    <strong>Status:</strong> <span class="status-{{ agendamento.status }}">{{ agendamento.status|capfirst }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="filter-info">Nenhum agendamento encontrado.</p>
+    {% endif %}
+
+
+    
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    flatpickr("#data_filtro", { 
+        dateFormat: "d/m/Y", 
+        locale: "pt",       
+    });
+
+   
+    flatpickr.setDefaults({
+        locale: {
+            weekdays: {
+                shorthand: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+                longhand: [
+                    "Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira",
+                    "Quinta-feira", "Sexta-feira", "Sábado",
+                ],
+            },
+            months: {
+                shorthand: [
+                    "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+                    "Jul", "Ago", "Set", "Out", "Nov", "Dez",
+                ],
+                longhand: [
+                    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+                    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
+                ],
+            },
+            firstDayOfWeek: 0,
+            ordinal: (nth) => {
+                if (nth > 1 && nth < 20) return "º";
+                return nth % 10 === 1 ? "º" : "º";
+            },
+            rangeSeparator: " a ",
+            time_24hr: true,
+            scrollTitle: "Role para aumentar",
+            toggleTitle: "Clique para alternar",
+            amPM: ["AM", "PM"],
+        },
+    });
+</script>
+{% endblock extra_js %}

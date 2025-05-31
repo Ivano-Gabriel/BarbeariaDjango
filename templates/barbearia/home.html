@@ -1,0 +1,45 @@
+{% extends 'base.html' %} 
+
+{% block title %}Denis Corts Barber-shop{% endblock %}
+
+{% block content %}
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>BORA AGENDAR! &DownArrow;</h1>
+            <a href="{% url 'criar-agendamento' %}" class="btn-agendar">Ficar na régua</a>
+        </div>
+    </div>
+
+    <section class="about-us">
+        <h2>Bem-vindo à Denis Corts!</h2>
+        <p>Um corte chave é de lei e nós sabemos disso, fica ligado que tua régua é nossa prioridade.</p>
+    </section>
+
+    <section class="services">
+        <h2>Se liga nos serviços!</h2>
+        <div class="service-cards">
+            <div class="card">
+                <h3>Cortes de todos os estilos</h3>
+                <p>A GENTE FAZ O QUE TU MANDA! <br> Degradê, social, jaca, americano, luzes, selagem e outros</p>
+            </div>
+            <div class="card">
+                <h3>Conforto inigualável</h3>
+                <p>Ar condicionado calibrado para uma sala de espera suave e confortável.</p>
+            </div>
+            <div class="card">
+                <h3>Alimentação de aliado</h3>
+                <p>Um bolinho, um refrigerante...tudo no ponto</p>
+            </div>
+            <div class="card">
+                <h3>Ambientação e música</h3>
+                <p>A música aqui é a milhão, fica livre para escolher seu hit do momento.</p>
+            </div>
+            <div class="card">
+                <h3>O melhor barbeiro do momento</h3>
+                <p>Garantimos seu corte com o melhorzinho do momento, o cara vai te deixar na régua!.</p>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}

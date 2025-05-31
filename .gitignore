@@ -1,0 +1,16 @@
+# Django
+__pycache__/
+*.pyc
+*.sqlite3
+media/
+static_cdn/ # Se você tiver uma pasta para coletar arquivos estáticos em produção
+
+# Ambiente Virtual
+.env/
+venv/
+env/
+
+# Outros
+.DS_Store
+*.sublime-project
+*.sublime-workspace

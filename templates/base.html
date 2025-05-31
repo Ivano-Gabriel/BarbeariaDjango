@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Barbearia X - Sua Barbearia Preferida{% endblock %}</title>
+
+    <style>
+        /* Importa as fontes do Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap');
+
+        /* Variáveis CSS para Cores (para facilitar a manutenção) */
+        :root {
+            --cor-principal: #FF5722; /* Laranja vibrante */
+            --cor-secundaria: #333333; /* Cinza escuro / Quase preto */
+            --cor-fundo-claro: #F8F8F8; /* Quase branco, para um look clean */
+            --cor-texto-escuro: #222222; /* Preto para texto */
+            --cor-texto-claro: #FFFFFF; /* Branco para texto em fundos escuros */
+            --cor-detalhe: #FF8A65; /* Laranja mais claro para detalhes */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif; /* Fonte para o corpo do texto */
+            margin: 0;
+            background-color: var(--cor-fundo-claro);
+            color: var(--cor-texto-escuro);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: var(--cor-secundaria);
+            color: var(--cor-texto-claro);
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        header h1 {
+            margin: 0;
+            font-family: 'Bebas Neue', sans-serif; /* Fonte descolada para o título */
+            font-size: 2.5em; /* Aumenta um pouco o tamanho */
+            letter-spacing: 2px; /* Espaçamento entre letras */
+            color: var(--cor-principal); /* Nome da barbearia em laranja */
+        }
+        header h1 a {
+            color: var(--cor-principal) !important; /* Força a cor laranja para o nome */
+            text-decoration: none;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        nav ul li a {
+            color: var(--cor-texto-claro) !important; /* DEVE ser branco no fundo escuro */
+            background-color: transparent !important; /* Garante fundo transparente */
+            text-decoration: none;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        nav ul li a:hover {
+            background-color: var(--cor-principal) !important; /* Laranja no hover */
+            color: var(--cor-texto-escuro) !important; /* Texto escuro no hover */
+        }
+        main {
+            flex: 1;
+            padding: 20px;
+        }
+        footer {
+            background-color: var(--cor-secundaria);
+            color: var(--cor-texto-claro);
+            text-align: center;
+            padding: 15px 20px;
+            margin-top: 20px;
+        }
+
+        /* Estilos para o formulário de criar_agendamento.html */
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: var(--cor-texto-claro); /* Fundo do formulário branco */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .form-container h1 {
+            text-align: center;
+            color: var(--cor-secundaria); /* Título do formulário em cinza escuro */
+            margin-bottom: 25px;
+            font-family: 'Bebas Neue', sans-serif; /* Mantém a fonte do título */
+            font-size: 2em;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--cor-texto-escuro); /* Labels em preto */
+        }
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="date"],
+        .form-group input[type="time"],
+        .form-group select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            color: var(--cor-texto-escuro);
+            background-color: var(--cor-fundo-claro); /* Fundo dos inputs levemente cinza */
+        }
+        .form-group .errorlist {
+            color: var(--cor-principal); /* Erros em laranja */
+            list-style: none;
+            padding: 0;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--cor-principal); /* Botão em laranja */
+            color: var(--cor-texto-escuro); /* Texto do botão em branco */
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: var(--cor-detalhe); 
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--cor-secundaria); 
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+            color: var(--cor-principal); 
+        }
+
+
+        .hero-section {
+            background-color: var(--cor-secundaria); 
+            color: var(--cor-texto-claro); 
+            text-align: center;
+            padding: 80px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px; 
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .hero-section::before { 
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative; 
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4em; 
+            letter-spacing: 3px;
+            color: var(--cor-principal); 
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
+        }
+
+        .btn-agendar { 
+            display: inline-block;
+            padding: 18px 40px; 
+            background-color: var(--cor-principal); 
+            color: var(--cor-texto-escuro) !important;
+            text-decoration: none;
+            border-radius: 8px; 
+            font-weight: bold;
+            font-size: 1.4em; 
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3); 
+        }
+
+        .btn-agendar:hover {
+            background-color: var(--cor-detalhe); 
+            transform: translateY(-2px);
+        }
+
+        
+        .about-us {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: var(--cor-fundo-claro);
+            color: var(--cor-texto-escuro);
+        }
+        .about-us h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5em;
+            color: var(--cor-secundaria);
+            margin-bottom: 20px;
+        }
+        .about-us p {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .services {
+            padding: 50px 20px;
+            background-color: var(--cor-texto-claro);
+            text-align: center;
+        }
+        .services h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5em;
+            color: var(--cor-secundaria);
+            margin-bottom: 40px;
+        }
+        .service-cards {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center;
+            gap: 30px; 
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .service-cards .card {
+            background-color: var(--cor-fundo-claro); 
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            flex: 1; 
+            min-width: 280px;
+            max-width: 350px; 
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+        .service-cards .card:hover {
+            transform: translateY(-5px); 
+        }
+        .service-cards .card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            color: var(--cor-principal);
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .service-cards .card p {
+            color: var(--cor-texto-escuro);
+            line-height: 1.5;
+        }
+
+.btn-primario {
+    display: inline-block; 
+    padding: 10px 20px;
+    background-color: var(--cor-principal); 
+    color: var(--cor-texto-escuro); 
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none; 
+}
+
+.btn-primario:hover {
+    background-color: var(--cor-detalhe); 
+    transform: translateY(-2px); 
+}
+    </style>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    {% block extra_head %}{% endblock extra_head %}
+    
+    {% block extra_js %}
+    {% endblock extra_js %}
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<body>
+    <header>
+        <h1><a href="{% url 'home' %}">DENIS CORTS <span>BARBEARIA</span></a></h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Início</a></li>
+                <li><a href="{% url 'lista-agendamentos' %}">Agendamentos</a></li>
+                <li><a href="{% url 'criar-agendamento' %}">Novo Agendamento</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Denis Corts Barbearia. Todos os direitos reservados.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</body>
+</html>
